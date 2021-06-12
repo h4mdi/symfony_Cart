@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+{% block title %}Les produits
+{% endblock %}
+
+{% block body %}
+    <div class="bg-light p-3">
+        <h1>Mon panier</h1>
+    </div>
+    
+{% if items | length > 0 %}
+<table class='table'>
+<thead><tr>
+<td>Produit</td>
+<td> Prix</td>
+<td> Quantité </td>
+<td> Total (TTC°</td>
+<td></td>
+
+</tr>
+</thead>
+<tbody>
+{% for item in items%}
+<tr>
+<td> {{item.product.title}}</td>
+<td> {{item.product.price}}</td>
+<td>{{item.quantity}} </td>
+<td>{{item.quantity * item.product.price}}</td>
+<td> 
+<a href="{{path('cart_add',{id:item.product.id}) }}" type="button" class="btn btn-outline-primary btn-number btn-sm" data-type="plus" data-field="quant[1]">
+<span class="fa fa-plus"></span> </a>
+                    
+<a href="{{path('cart_min',{id:item.product.id}) }}" type="button" class="btn btn-outline-secondary btn-number btn-sm"  data-type="minus" data-field="quant[1]">
+<span class="fa fa-minus"></span> </a>
+<a href ="{{path('cart_remv',{id:item.product.id}) }}" class='btn btn-danger btn-sm' title='supprimer' > <i class='fa fa-trash' aria-hidden="true"> </i> </a> 
+</td>
+</tr>
+
+{%endfor%}
+</tbody>
+<tfoot>
+<tr>
+<td collspan='3'>Total : {{total}} TND 
+</td>
+<td> </td>
+<td></td>
+</tr>
+</tfoot>
+</table>
+    {% else %}
+        <p> Vous n'avez pas encore de produits dans votre panier </p> 
+    {%endif%}
+{% endblock %}
